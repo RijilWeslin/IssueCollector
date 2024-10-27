@@ -1,0 +1,112 @@
+﻿@font-face {
+    font-family: "lobster";
+    src: url(../fonts/Lobster-Regular.ttf);
+}
+
+body {    
+    height: 95.2vh;
+    display: grid;
+    grid-template-rows: 5% 95% 5%;        
+}
+
+#header {
+    display: flex;
+    background-color: rgb(13, 40, 74);
+    align-items: center;    
+}
+#sidebarExpand
+{
+    display:flex;
+    background-color:blue;
+    justify-content:center;
+    align-items:center;
+    width:50px;    
+    height:20px;
+    margin-left:5px;
+    color:white;
+}
+
+#projectTitle {
+    color: rgb(119, 215, 245);
+    font-family: lobster;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+#body {    
+}
+
+    #body #sidebar {
+        background-color:rgb(3,99,130);
+        color:white;
+    }
+
+    #body #pageContent {   
+        background-color:rgb(236,243,245);
+    }
+
+.menu
+{
+    background-color:rgb(7, 139, 135);
+    margin-bottom:4px;
+    text-align:center;
+}
+
+.menu .mainMenu:hover
+{
+    background-color:blue !important;
+    cursor:pointer;
+}
+    .menu .subMenu {
+        display: none;
+        background-color:cadetblue;
+    }
+.menu:hover .subMenu
+{
+    display:block;
+}
+.menu .subMenu div:hover
+{
+    cursor:pointer;
+    background-color:green;
+}
+#footer {
+    background-color: rgb(18, 48, 73);
+}
+
+.single
+{
+    grid-template-columns:100%;
+}
+@media(max-width:576px) {
+    #body
+    {
+        display:flex;
+        flex-direction:column;
+    }
+}
+
+@media(min-width:576px) {
+    #body {
+        display: grid;
+    }
+    .multiple {
+        grid-template-columns: 25% 75%;
+    }
+}
+
+@media(min-width:768px) {
+}
+
+@media(min-width:992px) {
+    .multiple {
+        grid-template-columns: 20% 80%;
+    }    
+
+}
+
+@media(min-width:1200) {
+    .multiple {
+        grid-template-columns: 20% 85%;
+    }    
+}

@@ -1,0 +1,99 @@
+﻿@using SolutionSphere.Core.Entities;
+@using SolutionSphere.Web.ViewModels;
+@model IssueTrackerViewModel;
+<link rel="stylesheet" href="~/css/IssueTracker/AllIssues.css" asp-append-version="true"/>
+@await Component.InvokeAsync("IssueFilter")
+@foreach (var issue in Model.Issue.Subset)
+{    
+    <div class="issueCard p-2">
+        <div class="row">
+            <div class="col-10">
+                <div class="fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@issue.Id">
+                    <span class="fa-solid fa-plus-square me-1"></span>
+                    @foreach (var project in Model.Projects)
+                    {
+                        if (issue.ProjectCode == project.ProjectId)
+                        {
+                            <span class="issueProject">@project.ProjectName</span>
+                        }
+                    }
+                    <span id="issueTitle-@issue.Id"><pre>@issue.Title</pre></span>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="row">
+                    <a class="col editButton" data-id="@issue.Id" data-bs-toggle="modal" data-bs-target="#editIssueModal"><span class="fa-solid fa-edit"></span></a>
+                    <a class="col deleteButton" href="@Url.Action("Delete","IssueTracker", new{issueId=issue.Id})"><span class="fa-solid fa-trash"></span></a>
+                    <a class="col deleteButton"><span class="fa-solid fa-comment"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="ms-4 collapse" id="collapse-@issue.Id">
+            <section class="mb-3" class="issueDescription">
+                <div class="fw-bold">Description:</div>
+                <div id="issueDescription-@issue.Id"><pre class="issueDescriptionPre">@(!string.IsNullOrEmpty(issue.Description) ? issue.Description : "--------")</pre></div>
+            </section>
+            <section class="mb-3" class="issueSolution">
+                @{
+                    var solutionCount = 1;
+                    foreach(var solution in issue.Solution)
+                    {
+                        <div class="fw-bold">Solution @(solutionCount++):</div>
+                        <div id="issueSolution-@issue.Id"><pre class="issueSolutionPre">@solution.Solution</pre></div>
+                    }
+                }
+            </section>
+        </div>
+    </div>
+}
+
+@for (var i = 1; i <= Model.Issue.PageCount; i++)
+{
+    <a class="btn btn-primary" href="@Url.Action("AllIssues","IssueTracker", new{page=i})">@i</a>
+}
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="editIssueModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header d-flex">
+                    <button type="button" class="btn btn-primary close ms-auto" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="post" action="@Url.Action("UpdateIssue","Home")">
+                        <input type="hidden" id="editId" name="Id" value="" />
+                        <div class="fw-bold" required>Title:</div>
+                        <textarea id="editTitle" type="text" value="" name="Title"></textarea>
+                        <div class="fw-bold">Description:</div>
+                        <textarea id="editDescription" type="text" value="" name="Description"></textarea>
+                        <div class="fw-bold">Solution:</div>
+                        <textarea id="editSolution" type="text" value="" name="Solution"></textarea>
+                        </br>
+                        <div class="text-align-end btn btn-primary" id="editSubmit">
+                            Submit
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".editButton").click(function () {
+            var id = $(this).attr("data-id");
+            $("#editId").val(id);
+            $("#editTitle").val($("#issueTitle-" + id).text());
+            $("#editDescription").val($("#issueDescription-" + id).text());
+            $("#editSolution").val($("#issueSolution-" + id).text());
+        });
+        $("#editSubmit").click(function (e) {
+            e.preventDefault();
+            $("#editForm").submit();
+        });
+    });
+</script>

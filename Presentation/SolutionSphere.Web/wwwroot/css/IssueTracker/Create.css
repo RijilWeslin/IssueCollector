@@ -1,0 +1,12 @@
+﻿.createIssueHeader 
+{
+    text-align:center;
+    font-size:25px;
+    font-weight:500;
+
+}
+#issueCreationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

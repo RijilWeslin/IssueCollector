@@ -1,0 +1,38 @@
+﻿@using SolutionSphere.Web.ViewModels;
+@model IssueTrackerViewModel
+<link rel="stylesheet" href="/css/IssueTracker/Create.css" asp-append-version="true"/>
+<div class="createIssueHeader">Create an Issue</div>
+<form action="@Url.Action("CreateIssue","IssueTracker")" method="post" id="issueCreationForm">
+    <div>
+        <div>Title</div>
+        <input class="form-control" type="text" data-label="issueTitle" name="Title" />
+    </div>
+    <div>
+        <div>Description</div>
+        <input class="form-control" type="text" data-label="issueDescription" name="Description" />
+    </div>
+    <select name="ProjectCode">
+        @foreach(var project in Model.Projects)
+        {
+            <option value="@project.ProjectId">@project.ProjectName</option>
+        }
+    </select>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="solutionAvailableCheckbox">
+        <label class="form-check-label" for="solutionAvailableCheckbox">
+            Solution Available
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="visibleToEveryoneCheckbox">
+        <label class="form-check-label" for="visibleToEveryoneCheckbox">
+            Visible To Everyone
+        </label>
+    </div>
+    <div id="issueSolutionArea" class="d-none">
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" id="createIssueBtn" value="Create"></input>
+    </div>
+</form>
+<script src="/js/IssueTracker/Create.js" asp-append-version="true"></script>

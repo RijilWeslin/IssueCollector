@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SolutionSphere.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SolutionSphere.Web.styles.css" asp-append-version="true" />    
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true"/>
+    <script src="~/lib/font-awesome/js/all.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="header">
+        <div id="sidebarExpand"><span class="fa fa-expand"></span></div>
+        <div id="projectTitle"></div>
+    </div>
+    <div id="body" class="multiple">
+        <div id="sidebar">
+            @{
+                await Html.RenderPartialAsync("Sidebar");
+            }
+        </div>
+        <div id="pageContent">            
+            @RenderBody()                            
+        </div>
+    </div>   
+    <div id="footer" style="color:white"></div>    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>    
+    <script src="~/js/sidebar.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.nav_btn').click(function () {
+                $('.mobile_nav_items').toggleClass('active');
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
